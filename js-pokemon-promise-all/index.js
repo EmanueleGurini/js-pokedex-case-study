@@ -5,8 +5,6 @@ import { q, createCard } from "./utils.js";
 const container = q(".container");
 let lastElement = container;
 
-// Creo un array nel quale inserirò tutti gli url dei pokemon da 1 a 150
-const urls = [];
 
 // Dichiaro delle variabili globali, start e limit che utilizzerò per muovermi 
 // all'interno di un set di valori (da 1 a 11 --> da 11 a 21 etc.)
@@ -15,17 +13,6 @@ let limit = 0;
 
 // Limit verrà aumentato di dieci a ogni ciclo
 let crosser = 10;
-
-/**
- * Riempie un array con tutti gli url dei pokemon da 1 a 150
- */
-const getUrls = () => {
-  for (let i = 1; i <= 150; i++) {
-    urls.push(`https://pokeapi.co/api/v2/pokemon/${i}`);
-  }
-}
-
-getUrls();
 
 
 /**
@@ -45,12 +32,10 @@ const callback = (array) => {
   });
 };
 
-
 /**
  * Aumenta limit di dieci.
- * Esegue un fetch dei pokemon da start a limit. 
- * Seleziona la porzione di pokemon sui quali effettuare la request attraverso uno slice.
- * Stampa ogni Pokémon da start a limit.
+ * Esegue un for da start a limit e a ogni giro riempie un array di urls. 
+ * Esegue un Promise.all con tutti i pokemon nell'array (dieci).
  * 
  * Toglie l'observer dall'ultimo elemento su cui era impostato.
  * Seleziona l'ultima card contenuta nel .container e la inserisce nell'observer.
@@ -62,8 +47,13 @@ const callback = (array) => {
 const populateCards = (num) => {
   limit += num;
 
+  let urls = [];
+  for (let i = start; i <= limit; i++) {
+    urls.push(`https://pokeapi.co/api/v2/pokemon/${i}`);
+  }
+
   Promise.all(
-    urls.slice(start, limit).map((url) =>
+    urls.map((url) =>
       fetch(url)
         .then((res) => res.json())
         .then(
