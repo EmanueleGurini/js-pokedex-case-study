@@ -27,7 +27,7 @@ Gli url vengono presi attraverso uno slice(start, limit) dall'array degli url ri
 
 ### Versione four - utilizzo di Promise.all( )
 
-[Pokédex]("https://codesandbox.io/s/js-pokemon-infinity-scrolling-promise-all-zuq4uw")
+[Pokédex](https://codesandbox.io/s/js-pokemon-infinity-scrolling-promise-all-zuq4uw)
 
 Vengono realizzate tre variabili globali start, limit e crosser.
 Al primo download, attraverso un ciclo for, viene riempito un array di Pokémon che va da start a limit.
